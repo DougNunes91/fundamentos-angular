@@ -1,6 +1,7 @@
 import { TransferenciaService } from './../service/transferencia.service';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Transferencia } from 'src/models/transferencia.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nova-transferencia',
@@ -12,7 +13,7 @@ export class NovaTransferenciaComponent {
   valor: number;
   destino: number;
 
-  constructor(private transferenciaService: TransferenciaService){}
+  constructor(private transferenciaService: TransferenciaService, private router: Router){}
 
   transferir() {
     console.log('Solicitada nova transferência');
@@ -21,6 +22,7 @@ export class NovaTransferenciaComponent {
     this.transferenciaService.adicionarTransferenciaHttpPost(transferencia).subscribe(result =>{
       console.log(result);
       this.limparDados();
+      this.router.navigateByUrl('extrato');
     },
     //se acontecer algum erro no post, faço isso:
     error => console.error(error))
